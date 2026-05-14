@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phòng Thực Tế Ảo - Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- A-Frame core -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@5.0.1/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@^0.8.0/dist/aframe-look-at-component.min.js"></script>
+</head>
+<body>
+  <!-- Overlay UI -->
+  <div id="ui">
+    <h1>Phòng Triển lãm VR</h1>
+    <div id="hotspot-list"></div>
+    <button id="enter-vr">Bật VR / Fullscreen</button>
+  </div>
+
+  <!-- Info modal -->
+  <div id="infoModal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2 id="modalTitle">Tiêu đề</h2>
+      <p id="modalText">Mô tả</p>
+    </div>
+  </div>
+
+  <!-- A-Frame scene -->
+  <a-scene embedded vr-mode-ui="enterVRButton: false">
+    <!-- Camera + cursor for desktop + gaze -->
+    <a-entity id="cameraRig" position="0 1.6 0">
+      <a-entity id="camera" camera look-controls wasd-controls>
+        <a-entity cursor="fuse: true; fuseTimeout: 1000"
+                  position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+                  material="color: white; shader: flat"></a-entity>
+      </a-entity>
+    </a-entity>
+
+    <!-- Sky: panorama image; replace assets/hall.jpg bằng ảnh 360 equirectangular của bạn -->
+    <a-sky id="sky" src="assets/hall.jpg" rotation="0 -90 0"></a-sky>
+
+    <!-- Ground / invisible for reference -->
+    <a-plane visible="false" position="0 0 0" rotation="-90 0 0" width="50" height="50"></a-plane>
+
+    <!-- Hotspots container -->
+    <a-entity id="hotspots"></a-entity>
+
+    <!-- Simple ambient light -->
+    <a-entity light="type: ambient; color: #ffffff; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.6" position="0 5 1"></a-entity>
+  </a-scene>
+
+  <script src="main.js"></script>
+</body>
+</html>
